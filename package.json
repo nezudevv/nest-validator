@@ -1,0 +1,40 @@
+{
+  "name": "ts-validator",
+  "version": "0.1.0",
+  "description": "TS Validator",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "typescript",
+    "library"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nezudevv/ts-validator"
+  },
+  "bugs": {
+    "url": "https://github.com/nezudevv/ts-validator/issues"
+  },
+  "homepage": "https://github.com/nezudevv/ts-validator#readme",
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "ts-morph": "^24.0.0",
+    "tsup": "^8.3.0"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.4.4",
+    "typescript": "^5.6.3"
+  }
+}
