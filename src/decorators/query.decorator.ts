@@ -123,6 +123,7 @@ function isValidString(paramName: string, queryValue: string): string {
 
 // Validation for Array values (assuming array of strings for now)
 // only accounting for arrays who's elements are all of the same data type
+// the assumption is that 99% of arrays in js will be of identical element types
 function isValidArray(
   paramName: string,
   queryValue: any,
