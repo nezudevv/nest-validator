@@ -3,11 +3,11 @@ import {
   ExecutionContext,
   BadRequestException,
 } from "@nestjs/common";
-import { getParamType } from "../utils/getParamType";
+import { getParamOrQueryType } from "../utils/getParamOrQueryType";
 
 export var Param = createParamDecorator(
   (paramName: string, ctx: ExecutionContext) => {
-    let expectedType = getParamType(ctx, paramName);
+    let expectedType = getParamOrQueryType(ctx, paramName);
     let request = ctx.switchToHttp().getRequest();
     let paramValue = request.params[paramName];
 
@@ -59,17 +59,19 @@ function isValidNumber(
   paramName: string,
   paramValue: string,
 ): number | BadRequestException {
-  if (!Number.isNaN(Number(paramValue))) {
-    return Number(paramValue);
+  const parsedNumber = Number(paramValue);
+
+  if (Number.isNaN(parsedNumber)) {
+    throw new BadRequestException({
+      message: `Query parameter '${paramName}' must be a valid Number`,
+      parameter: paramName,
+      received: paramValue,
+      receivedType: typeof paramValue,
+      expectedType: "Number",
+    });
   }
 
-  throw new BadRequestException({
-    message: `Parameter '${paramName}' must be a valid Number`,
-    parameter: paramName,
-    received: paramValue,
-    receivedType: typeof paramValue,
-    expectedType: "Number",
-  });
+  return parsedNumber;
 }
 
 function isValidString(

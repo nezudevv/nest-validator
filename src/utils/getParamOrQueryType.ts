@@ -1,7 +1,10 @@
 import { ExecutionContext } from "@nestjs/common";
 import { Project } from "ts-morph";
 
-export var getParamType = (ctx: ExecutionContext, paramName: string) => {
+export function getParamOrQueryType(
+  ctx: ExecutionContext,
+  paramName: string,
+): string {
   let className = ctx.getClass().name;
   let methodName = ctx.getHandler().name;
   let project = new Project({ tsConfigFilePath: "./tsconfig.json" });
@@ -15,11 +18,14 @@ export var getParamType = (ctx: ExecutionContext, paramName: string) => {
 
   let classDeclaration = sourceFile.getClassOrThrow(className);
   let method = classDeclaration.getMethodOrThrow(methodName);
+
+  console.log('paramName: ', paramName)
+
   let param = method.getParameter(paramName);
 
   if (!param) {
     throw new Error(
-      `Parameter "${paramName}" not found in method "${methodName}"`,
+      `Parameter "${paramName}" not found in class: ${className}'s method "${methodName}"`,
     );
   }
 
