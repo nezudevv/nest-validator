@@ -30,6 +30,7 @@
   "homepage": "https://github.com/nezudevv/ts-validator#readme",
   "devDependencies": {
     "@types/debug": "^4.1.12",
+    "@types/node": "^22.7.5",
     "ts-morph": "^24.0.0",
     "tsup": "^8.3.0"
   },

@@ -1,39 +1,29 @@
+import { ExecutionContext } from "@nestjs/common";
 import { Project } from "ts-morph";
 
-// maybe cache this somewhere
-var project = new Project({ tsConfigFilePath: "./tsconfig.json" });
-var controllerFiles = project.getSourceFiles("src/**/*.controller.ts");
+export var getParamType = (ctx: ExecutionContext, paramName: string) => {
+  let className = ctx.getClass().name;
+  let methodName = ctx.getHandler().name;
+  let project = new Project({ tsConfigFilePath: "./tsconfig.json" });
+  let sourceFile = project
+    .getSourceFiles()
+    .find((file) => file.getClass(className));
 
-export function getParamType(
-  target: any,
-  propertyKey: string,
-  paramName: string,
-) {
-  for (let sourceFile of controllerFiles) {
-    const classDeclaration = sourceFile.getClass(target.constructor.name);
+  if (!sourceFile) {
+    throw new Error(`Class "${className}" not found in any controller files`);
+  }
 
-    if (classDeclaration) {
-      // We've found the correct class, now find the method
-      const method = classDeclaration.getMethodOrThrow(propertyKey);
+  let classDeclaration = sourceFile.getClassOrThrow(className);
+  let method = classDeclaration.getMethodOrThrow(methodName);
+  let param = method.getParameter(paramName);
 
-      if (!method) {
-        throw new Error(
-          `Method "${propertyKey}" not found in class "${target.constructor.name}"`,
-        );
-      }
-
-      const param = method.getParameter(paramName);
-
-      if (!param) {
-        throw new Error(
-          `Parameter "${paramName}" not found in method "${propertyKey}"`,
-        );
-      }
-
-      return param.getType().getText(); // Return the type as a string
-    }
+  if (!param) {
     throw new Error(
-      `Class "${target.constructor.name}" not found in any controller files`,
+      `Parameter "${paramName}" not found in method "${methodName}"`,
     );
   }
+
+  let paramType = param.getType().getText();
+
+  return paramType;
 }
