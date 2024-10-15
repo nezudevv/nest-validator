@@ -22,12 +22,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nezudevv/ts-validator"
+    "url": "https://github.com/nezudevv/nest-validator"
   },
   "bugs": {
-    "url": "https://github.com/nezudevv/ts-validator/issues"
+    "url": "https://github.com/nezudevv/nest-validator/issues"
   },
-  "homepage": "https://github.com/nezudevv/ts-validator#readme",
+  "homepage": "https://github.com/nezudevv/nest-validator/#readme",
   "devDependencies": {
     "@types/debug": "^4.1.12",
     "@types/node": "^22.7.5",
