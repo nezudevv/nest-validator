@@ -14,7 +14,7 @@ Note: While currently in pre-alpha, the goal is to reach full functionality and 
 
 ## Swagger Documentation Generation
 ### Support for generating Swagger docs for:
-- ***GET, POST, PUT, PATCH, DELETE***
+- GET, POST, PUT, PATCH, DELETE
 ### Once basic verb handling is complete, we will expand documentation to cover:
 - ***Route parameters***
 - ***Query parameters***
